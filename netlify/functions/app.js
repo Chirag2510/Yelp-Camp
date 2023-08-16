@@ -12,19 +12,19 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const ExpressError = require('./utils/ExpressError');
+const ExpressError = require('../../utils/ExpressError');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const User = require('./models/user');
+const User = require('../../models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
 
-const campgroundRoutes = require('./routes/campground');
-const reviewRoutes = require('./routes/reviews');
-const userRoutes = require('./routes/users');
+const campgroundRoutes = require('../../routes/campground');
+const reviewRoutes = require('../../routes/reviews');
+const userRoutes = require('../../routes/users');
 
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
 mongoose.connect(dbUrl);
@@ -36,13 +36,13 @@ db.once('open', () => {
 })
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../../views'));
 app.engine('ejs', ejsMate);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 //Used to set public directory accessible in whole application
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../public')));
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 

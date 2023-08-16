@@ -1,4 +1,8 @@
+[functions]
+  external_node_modules = ["express"]
+  node_bundler = "esbuild"
 [[redirects]]
-from = "/*"
-to = "/views/home.ejs"
-status = 200
+  force = true
+  from = "/app/*"
+  status = 200
+  to = "/.netlify/functions/api/:splat"
