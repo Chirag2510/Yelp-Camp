@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+<div id="cluster-map"></div>
+<h1>All Campgrounds</h1>
+<div>
+    <a href="/campgrounds/new">Add a New Campground</a>
+</div>
+<ul>
+    <% for( let campground of campgrounds ) { %>
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <% if(campground.images.length) { %>
+                        <img crossorigin="anonymous" class="img-fluid" alt="" src="<%= campground.images[0].url %>">
+                    <% } else { %>
+                        <img crossorigin="anonymous" class="img-fluid" alt="" src="data:image/png;base64,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">
+                    <% } %>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= campground.title %></h5>
+                        <p class="card-text"><%= campground.description %></p>
+                        <p class="card-text">
+                           <small class="text-muted"><%= campground.location %></small>
+                        </p>
+                        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">View <%=campground.title %></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+</ul>
+
+<script>
+    const mapToken = '<%= process.env.MAPBOX_TOKEN %>';
+    const campgrounds = {features: <%- JSON.stringify(campgrounds) %>};
+</script>
+
+<script src="/javascripts/clusterMap.js"></script>
+
