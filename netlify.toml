@@ -1,4 +1,4 @@
 [[redirects]]
 from = "/*"
-to = "/users/home.ejs"
+to = "/views/home.ejs"
 status = 200
