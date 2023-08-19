@@ -2,9 +2,9 @@
 // https://git.heroku.com/whispering-meadow-55020.git
 
 //If not running from Production then access environment variables from .env file
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config();
-// }
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const express = require('express');
 const app = express();
@@ -175,4 +175,4 @@ app.listen(port, () => {
     console.log(`Serving on Port ${port}`);
 })
 
-export const handler = serverless(api);
+module.exports = serverless(app);
