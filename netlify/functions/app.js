@@ -2,9 +2,9 @@
 // https://git.heroku.com/whispering-meadow-55020.git
 
 //If not running from Production then access environment variables from .env file
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config();
+// }
 
 const express = require('express');
 const app = express();
@@ -144,9 +144,9 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/campgrounds', campgroundRoutes);
-app.use('/campgrounds/:id/reviews', reviewRoutes);
-app.use('/', userRoutes);
+app.use('/app/campgrounds', campgroundRoutes);
+app.use('/app/campgrounds/:id/reviews', reviewRoutes);
+app.use('/app/', userRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');
