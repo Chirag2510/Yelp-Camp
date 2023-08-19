@@ -12,20 +12,19 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const ExpressError = require('../../utils/ExpressError');
+const ExpressError = require('./utils/ExpressError');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const User = require('../../models/user');
+const User = require('./models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
-const serverless = require('serverless-http');
 
-const campgroundRoutes = require('../../routes/campground');
-const reviewRoutes = require('../../routes/reviews');
-const userRoutes = require('../../routes/users');
+const campgroundRoutes = require('./routes/campground');
+const reviewRoutes = require('./routes/reviews');
+const userRoutes = require('./routes/users');
 
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
 mongoose.connect(dbUrl);
@@ -37,13 +36,13 @@ db.once('open', () => {
 })
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../../views'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejsMate);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 //Used to set public directory accessible in whole application
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
@@ -145,14 +144,13 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/app/campgrounds', campgroundRoutes);
-app.use('/app/campgrounds/:id/reviews', reviewRoutes);
-app.use('/app/', userRoutes);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
+app.use('/', userRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');
 })
-
 
 // app.get('/makecampground', async (req, res) => {
 //     const camp = new Campground({title: 'My Backyard', description: 'cheap camping'});
@@ -174,5 +172,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Serving on Port ${port}`);
 })
-
-module.exports = serverless(app);
