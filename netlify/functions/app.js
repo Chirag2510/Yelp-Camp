@@ -21,6 +21,7 @@ const User = require('../../models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
+const serverless = require('serverless-http');
 
 const campgroundRoutes = require('../../routes/campground');
 const reviewRoutes = require('../../routes/reviews');
@@ -152,6 +153,7 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
+
 // app.get('/makecampground', async (req, res) => {
 //     const camp = new Campground({title: 'My Backyard', description: 'cheap camping'});
 //     await camp.save();
@@ -172,3 +174,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Serving on Port ${port}`);
 })
+
+export const handler = serverless(api);
